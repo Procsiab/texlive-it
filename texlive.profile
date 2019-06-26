@@ -13,6 +13,7 @@ collection-basic 1
 collection-binextra 1
 collection-langitalian 1
 collection-latex 1
+collection-latexextra 1
 collection-mathscience 1
 collection-pictures 1
 collection-plaingeneric 1
