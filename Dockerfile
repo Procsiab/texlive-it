@@ -1,14 +1,14 @@
-# Crea immagine Docker di TexLive 2019 in Italiano, per Raspberry Pi (ARMv7 32bit)
+# Crea immagine Docker di TexLive 2019 in Italiano, per ARM a 32 e 64 bit
 
 # Immagine base "snellita" (no manpage, no accessibilità, ecc...)
-FROM arm32v7/debian:unstable-slim
+FROM debian:stretch-slim
 
 # Cartella in cui sarà scaricato l'installer di texlive aggiunta alla PATH
-ENV PATH /usr/local/texlive/2019/bin/armhf-linux:$PATH
+ENV PATH="/usr/local/texlive/2019/bin/aarch64-linux:${PATH}"
 
-# Disabilita chache per apt, aggiorna e installa pacchetti
+# Disabilita cache, aggiorna e installa pacchetti
 RUN echo -e "Dir::Cache "";\nDir::Cache::archives "";" > /etc/apt/apt.conf.d/02nocache && \
-	apt update && apt install -y make perl wget xz-utils tar && mkdir /tmp/install-tl-unx
+        apt update && apt install -y make perl wget xz-utils tar && mkdir /tmp/install-tl-unx
 
 # Copia file profilo installazione personalizzato
 COPY texlive.profile /tmp/install-tl-unx/
@@ -26,5 +26,5 @@ RUN rm -rf /tmp/install-tl-unx
 WORKDIR /workdir
 VOLUME ["/workdir"]
 
-# Avvia shell bash quando container avviato con comando
+# Avvia shell quando container avviato con comando
 CMD ["bash"]
