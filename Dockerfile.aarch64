@@ -1,4 +1,6 @@
-FROM amd64/debian:stretch-slim
+FROM arm64v8/debian:stretch-slim
+
+COPY qemu-aarch64-static /usr/bin/
 
 ENV PATH="/usr/local/texlive/2020/bin/aarch64-linux:${PATH}"
 
@@ -15,5 +17,7 @@ RUN rm -rf /tmp/install-tl-unx
 
 WORKDIR /workdir
 VOLUME ["/workdir"]
+
+RUN rm -rf /usr/bin/qemu-aarch64-static
 
 CMD ["bash"]

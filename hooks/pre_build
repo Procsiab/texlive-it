@@ -1,0 +1,13 @@
+#!/bin/bash
+
+# Obtain the Dockerfile name with extension
+BUILD_ARCH=$(basename "${DOCKERFILE_PATH}")
+
+# If no extension is found, assume x86_64 target, or else run QEMU registration
+if [[ "${BUILD_ARCH}" == "Dockerfile" ]]
+then
+    echo 'qemu-user-static: Registration not required for current arch'
+    exit 0
+else
+    docker run --rm --privileged multiarch/qemu-user-static:register --reset
+fi
