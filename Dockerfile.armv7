@@ -2,7 +2,7 @@ FROM arm32v7/debian:stretch-slim
 
 COPY qemu-arm-static /usr/bin/
 
-ENV PATH="/usr/local/texlive/2020/bin/aarch64-linux:${PATH}"
+ENV PATH="/usr/local/texlive/2020/bin/armhf-linux:${PATH}"
 
 RUN echo -e "Dir::Cache "";\nDir::Cache::archives "";" > /etc/apt/apt.conf.d/02nocache && \
         apt update && apt install -y make perl wget xz-utils tar && mkdir /tmp/install-tl-unx

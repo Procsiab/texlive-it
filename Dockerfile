@@ -1,6 +1,6 @@
 FROM amd64/debian:stretch-slim
 
-ENV PATH="/usr/local/texlive/2020/bin/aarch64-linux:${PATH}"
+ENV PATH="/usr/local/texlive/2020/bin/x86_64-linux:${PATH}"
 
 RUN echo -e "Dir::Cache "";\nDir::Cache::archives "";" > /etc/apt/apt.conf.d/02nocache && \
         apt update && apt install -y make perl wget xz-utils tar && mkdir /tmp/install-tl-unx
