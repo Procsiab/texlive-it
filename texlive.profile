@@ -8,7 +8,6 @@ TEXMFLOCAL /usr/local/texlive/texmf-local
 TEXMFSYSCONFIG /usr/local/texlive/2020/texmf-config
 TEXMFSYSVAR /usr/local/texlive/2020/texmf-var
 TEXMFVAR ~/.texlive2020/texmf-var
-binary_aarch64-linux 1
 collection-basic 1
 collection-binextra 1
 collection-langitalian 1
