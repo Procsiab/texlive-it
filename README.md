@@ -1,4 +1,4 @@
-# TexLive multi-arch with Italian langiage
+# TexLive multi-arch with Italian language
 
 This image was built to use with CI/CD LaTeX testing and deploying pipeline, on an x86\_64 machine; the image 
 itself is based on Debian slim, and it uses `bash`. Moreover, the mountpoint for the compiler's workspace is 
@@ -14,7 +14,7 @@ The Dockerfile is written to allow cross-architecture builds, using QEMU's user-
 - to build the container for *aarch64*, run `cp $(which qemu-aarch64-static) .`;
 - run the build process with `docker build -t myregistry/texlive-rpi-it:arm64 .`.
 
-If you want to use a target architecture different from ARM 64 bit, just change the Dockerfile according to the needed _qemu-static-*_ binary file, and copy it into the repo directory as shown above. Also, remember to specify the correct base image at the beinning of the Dockerfile.
+If you want to use a target architecture different from ARM 64 bit, just change the Dockerfile according to the needed _qemu-static-*_ binary file, and copy it into the repo directory as shown above. Also, remember to specify the correct base image at the banning of the Dockerfile.
 
 ### Configure TexLive
 
