@@ -1,4 +1,4 @@
-FROM amd64/debian:buster-20200514-slim
+FROM amd64/debian:buster-20200803-slim
 
 ENV PATH="/usr/local/texlive/2020/bin/x86_64-linux:${PATH}"
 
