@@ -24,8 +24,20 @@ Using the file `packages.txt` you can provide additional packages names to be do
 
 ### Tags and architectures
 
-- `1.0-armv7`: ARMv7 32 bit arch.
-- `1.0-aarch64`: ARM 64 bit arch.
-- `1.0-amd64`: x86 64 bit arch.
+- `1.2-armv7`: ARMv7 32 bit arch.
+- `1.2-aarch64`: ARM 64 bit arch.
+- `1.2-amd64`: x86 64 bit arch.
 
-Change the tag when you pull from the registry, e.g. `docker pull procsiab/texlive-it:1.0-aarch64`
+Change the tag when you pull from the registry, e.g. `docker pull procsiab/texlive-it:1.2-aarch64`
+
+## Compiling documents from the container
+
+1. Change directory to your soruce code root;
+2. run the following command:
+```bash
+docker run --rm -it -v $(pwd):/workdir:z procsiab/texlive-it:1.2-amd64 bash
+```
+3. to output a PDF, from the prompt inside the container, invoke the compiler as follows:
+```bash
+latexmk -quiet -pdf -pdflatex="pdflatex -interaction=nonstopmode"
+```

@@ -1,4 +1,4 @@
-FROM arm64v8/debian:buster-20200803-slim
+FROM arm64v8/debian:buster-20201117-slim
 
 COPY qemu-aarch64-static /usr/bin/
 

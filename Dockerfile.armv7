@@ -1,4 +1,4 @@
-FROM arm32v7/debian:buster-20200803-slim
+FROM arm32v7/debian:buster-20201117-slim
 
 COPY qemu-arm-static /usr/bin/
 
