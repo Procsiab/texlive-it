@@ -1,4 +1,4 @@
-FROM amd64/debian:stretch-20210816-slim
+FROM amd64/debian:bullseye-20210816-slim
 
 ENV PATH="/usr/local/texlive/2021/bin/x86_64-linux:${PATH}"
 

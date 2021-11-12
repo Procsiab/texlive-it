@@ -1,4 +1,4 @@
-FROM arm32v7/debian:stretch-20210816-slim
+FROM arm32v7/debian:bullseye-20210816-slim
 
 COPY qemu-arm-static /usr/bin/
 

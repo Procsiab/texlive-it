@@ -29,8 +29,8 @@ tlpdbopt_create_formats 1
 tlpdbopt_desktop_integration 1
 tlpdbopt_file_assocs 1
 tlpdbopt_generate_updmap 0
-tlpdbopt_install_docfiles 1
-tlpdbopt_install_srcfiles 1
+tlpdbopt_install_docfiles 0
+tlpdbopt_install_srcfiles 0
 tlpdbopt_post_code 1
 tlpdbopt_sys_bin /usr/local/bin
 tlpdbopt_sys_info /usr/local/share/info
