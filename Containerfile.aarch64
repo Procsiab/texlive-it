@@ -1,6 +1,8 @@
-FROM amd64/debian:bullseye-20210816-slim
+FROM arm64v8/debian:bullseye-20220228-slim
 
-ENV PATH="/usr/local/texlive/2021/bin/x86_64-linux:${PATH}"
+COPY qemu-aarch64-static /usr/bin/
+
+ENV PATH="/usr/local/texlive/2021/bin/aarch64-linux:${PATH}"
 
 RUN echo -e "Dir::Cache "";\nDir::Cache::archives "";" > /etc/apt/apt.conf.d/02nocache && \
         apt update && apt install -y \
@@ -25,4 +27,6 @@ RUN tlmgr install $(cat /tmp/packages.txt) && rm /tmp/packages.txt
 WORKDIR /workdir
 VOLUME ["/workdir"]
 
-CMD ["bash"]
+RUN rm -rf /usr/bin/qemu-aarch64-static
+
+CMD ["/bin/bash"]

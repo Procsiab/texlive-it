@@ -57,7 +57,7 @@ jobs:
           docker run --rm --privileged multiarch/qemu-user-static --reset -p yes
       - name: Build and tag the container image
         run: |
-          docker build -f ${CWD}/Dockerfile.${{ matrix.container_arch }} -t ${IMAGE_NAME}:${{ env.GH_TAG }}-${{ matrix.container_arch }} ${CWD}
+          docker build -f ${CWD}/Containerfile.${{ matrix.container_arch }} -t ${IMAGE_NAME}:${{ env.GH_TAG }}-${{ matrix.container_arch }} ${CWD}
       - name: Login to Docker Hub
         run: |
           echo ${{ secrets.DOCKER_HUB_TOKEN }} | docker login --username ${{ secrets.DOCKER_HUB_USERNAME }} --password-stdin
