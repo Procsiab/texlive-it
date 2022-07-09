@@ -1,8 +1,8 @@
-FROM arm32v7/debian:bullseye-20220228-slim
+FROM arm32v7/debian:bullseye-20220622-slim
 
 COPY qemu-arm-static /usr/bin/
 
-ENV PATH="/usr/local/texlive/2021/bin/armhf-linux:${PATH}"
+ENV PATH="/usr/local/texlive/2022/bin/armhf-linux:${PATH}"
 
 RUN echo -e "Dir::Cache "";\nDir::Cache::archives "";" > /etc/apt/apt.conf.d/02nocache && \
         apt update && apt install -y \
@@ -15,7 +15,7 @@ RUN echo -e "Dir::Cache "";\nDir::Cache::archives "";" > /etc/apt/apt.conf.d/02n
 COPY texlive.profile /tmp/install-tl-unx/
 COPY packages.txt /tmp/packages.txt
 
-RUN wget -qO - ftp://tug.org/historic/systems/texlive/2021/install-tl-unx.tar.gz | \
+RUN wget -qO - ftp://tug.org/historic/systems/texlive/2022/install-tl-unx.tar.gz | \
     tar -xz -C /tmp/install-tl-unx --strip-components=1
 RUN /tmp/install-tl-unx/install-tl \
       --profile=/tmp/install-tl-unx/texlive.profile \
