@@ -1,4 +1,4 @@
-FROM arm64v8/debian:bullseye-20220622-slim
+FROM docker.io/arm64v8/debian:bullseye-20220622-slim
 
 COPY qemu-aarch64-static /usr/bin/
 
