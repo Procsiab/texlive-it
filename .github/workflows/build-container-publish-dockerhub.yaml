@@ -17,7 +17,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Download code from GitHub
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
       - name: Save the tag that triggered the workflow to an env file
         run: |
           echo "GH_TAG=${GITHUB_REF/refs\/tags\//}" >> ${CWD}/GH_TAG.env && cat ${CWD}/GH_TAG.env
@@ -28,7 +28,7 @@ jobs:
         run: |
           cp /usr/bin/qemu-aarch64-static /usr/bin/qemu-arm-static ${CWD}
       - name: Upload repo folder artifact
-        uses: actions/upload-artifact@v2
+        uses: actions/upload-artifact@v3
         with:
           name: repo-folder
           path: ${{ env.CWD }}
@@ -44,7 +44,7 @@ jobs:
     needs: setup
     steps:
       - name: Download repo folder artifact
-        uses: actions/download-artifact@v2
+        uses: actions/download-artifact@v3
         with:
           name: repo-folder
           path: ${{ env.CWD }}
