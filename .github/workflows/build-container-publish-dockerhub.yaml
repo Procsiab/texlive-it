@@ -9,12 +9,13 @@ on:
 env:
   IMAGE_NAME: ${{ secrets.DOCKER_HUB_USERNAME }}/texlive-it
   CWD: ${{ github.workspace }}
+  UBUNTU_VERSION: 22.04
 
 jobs:
 
   setup:
     name: Download the code and QEMU bineries
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-22.04
     steps:
       - name: Download code from GitHub
         uses: actions/checkout@v3
@@ -40,7 +41,7 @@ jobs:
       fail-fast: false
       matrix:
         container_arch: [aarch64, amd64, armv7]
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-22.04
     needs: setup
     steps:
       - name: Download repo folder artifact
@@ -57,7 +58,7 @@ jobs:
           docker run --rm --privileged multiarch/qemu-user-static --reset -p yes
       - name: Build and tag the container image
         run: |
-          docker build -f ${CWD}/Containerfile.${{ matrix.container_arch }} -t ${IMAGE_NAME}:${{ env.GH_TAG }}-${{ matrix.container_arch }} ${CWD}
+          docker build -f ${CWD}/Containerfile.${{ matrix.container_arch }} -t ${IMAGE_NAME}:${{ env.GH_TAG }}-${{ matrix.container_arch }} --build-arg ARCH=${{ matrix.container_arch }} ${CWD}
       - name: Login to Docker Hub
         run: |
           echo ${{ secrets.DOCKER_HUB_TOKEN }} | docker login --username ${{ secrets.DOCKER_HUB_USERNAME }} --password-stdin
@@ -67,3 +68,41 @@ jobs:
       - name: Logout from Docker Hub
         run: |
           docker logout
+
+  manifest-tag:
+    name: Create a container manifest to merge architecture tags and apply latest tag
+    runs-on: ubuntu-22.04
+    needs: build-push
+    steps:
+      - name: Download repo folder artifact
+        uses: actions/download-artifact@v3
+        with:
+          name: repo-folder
+          path: ${{ env.CWD }}
+      - name: Load version tag into env var
+        run: |
+          cat ${CWD}/GH_TAG.env >> $GITHUB_ENV
+      - name: Set up Kubic repo and install Podman
+        run: |
+          export KEY_URL='https://download.opensuse.org/repositories/devel:/kubic:/libcontainers:/unstable/xUbuntu_${{ env.UBUNTU_VERSION }}/Release.key' && \
+          export SOURCES_URL='https://download.opensuse.org/repositories/devel:/kubic:/libcontainers:/unstable/xUbuntu_${{ env.UBUNTU_VERSION }}/' && \
+          sudo echo "deb $SOURCES_URL /" | sudo tee /etc/apt/sources.list.d/devel:kubic:libcontainers:unstable.list && \
+          sudo curl -fsSL $KEY_URL | gpg --dearmor | sudo tee /etc/apt/trusted.gpg.d/devel_kubic_libcontainers_unstable.gpg > /dev/null && \
+          sudo apt update && sudo apt install podman
+      - name: Create the image manifest and apply latest tag
+        run: |
+          podman manifest create ${IMAGE_NAME}:${{ env.GH_TAG }} \
+            --amend ${IMAGE_NAME}:${{ env.GH_TAG }}-amd64 \
+            --amend ${IMAGE_NAME}:${{ env.GH_TAG }}-armv7 \
+            --amend ${IMAGE_NAME}:${{ env.GH_TAG }}-aarch64 && \
+          podman tag ${IMAGE_NAME}:${{ env.GH_TAG }} ${IMAGE_NAME}:latest
+      - name: Login to Docker Hub
+        run: |
+          echo ${{ secrets.DOCKER_HUB_TOKEN }} | podman login docker.io --username ${{ secrets.DOCKER_HUB_USERNAME }} --password-stdin
+      - name: Push the manifest and the latest tag
+        run: |
+          podman manifest push localhost/${IMAGE_NAME}:${{ env.GH_TAG }} docker://docker.io/${IMAGE_NAME}:${{ env.GH_TAG }} && \
+          podman manifest push localhost/${IMAGE_NAME}:latest docker://docker.io/${IMAGE_NAME}:latest
+      - name: Logout from Docker Hub
+        run: |
+          podman logout
