@@ -1,7 +1,5 @@
 FROM docker.io/arm64v8/debian:bookworm-20230109-slim
 
-COPY qemu-aarch64-static /usr/bin/
-
 ENV PATH="/usr/local/texlive/2022/bin/aarch64-linux:${PATH}"
 
 RUN echo -e "Dir::Cache "";\nDir::Cache::archives "";" > /etc/apt/apt.conf.d/02nocache && \
@@ -26,7 +24,5 @@ RUN tlmgr install $(cat /tmp/packages.txt) && rm /tmp/packages.txt
 
 WORKDIR /workdir
 VOLUME ["/workdir"]
-
-RUN rm -rf /usr/bin/qemu-aarch64-static
 
 CMD ["/bin/bash"]

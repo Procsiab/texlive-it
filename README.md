@@ -17,7 +17,6 @@ Also, the container images for ARMv7, AARCH64 and x86\_64 platforms are automati
 The Containerfile is written to allow cross-architecture builds, using QEMU's user-static package: to build the image on x86 for another platform do the following:
 
 - be sure to install `qemu-user-static` if you need to run the container on an architecture different from the local one;
-- to build the container for *aarch64*, run `cp $(which qemu-aarch64-static) .`;
 - run the build process with `podman build -f Containerfile.aarch64 -t myregistry/texlive-it:v1.0-aarch64 .`
 
 ### Configure TexLive

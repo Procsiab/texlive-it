@@ -9,7 +9,6 @@ on:
 env:
   IMAGE_NAME: ${{ secrets.DOCKER_HUB_USERNAME }}/texlive-it
   CWD: ${{ github.workspace }}
-  UBUNTU_VERSION: 22.04
 
 jobs:
 
