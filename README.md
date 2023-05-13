@@ -17,7 +17,7 @@ Also, the container images for ARMv7, AARCH64 and x86\_64 platforms are automati
 The Containerfile is written to allow cross-architecture builds, using QEMU's user-static package: to build the image on x86 for another platform do the following:
 
 - be sure to install `qemu-user-static` if you need to run the container on an architecture different from the local one;
-- run the build process with `podman build -f Containerfile.aarch64 -t myregistry/texlive-it:v1.0-aarch64 .`
+- run the build process with `podman build -f Containerfile.aarch64 -t myregistry/texlive-it:latest .`
 
 ### Configure TexLive
 
@@ -30,7 +30,7 @@ Using the file `packages.txt` you can provide additional package names to be dow
 1. Change directory to your soruce code root;
 2. run the following command:
 ```bash
-podman run --rm -it -v $(pwd):/workdir:z procsiab/texlive-it:v1.5-amd64 bash
+podman run --rm -it -v $(pwd):/workdir:z procsiab/texlive-it:latest bash
 ```
 3. to output a PDF, from the prompt inside the container, invoke the compiler as follows:
 ```bash
