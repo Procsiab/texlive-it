@@ -1,6 +1,6 @@
-FROM docker.io/arm32v7/debian:bookworm-20230502-slim
+FROM docker.io/arm32v7/debian:trixie-20240311-slim
 
-ENV PATH="/usr/local/texlive/2023/bin/armhf-linux:${PATH}"
+ENV PATH="/usr/local/texlive/2024/bin/armhf-linux:${PATH}"
 
 RUN echo -e "Dir::Cache "";\nDir::Cache::archives "";" > /etc/apt/apt.conf.d/02nocache && \
         apt update && apt install -y \
@@ -13,7 +13,7 @@ RUN echo -e "Dir::Cache "";\nDir::Cache::archives "";" > /etc/apt/apt.conf.d/02n
 COPY texlive.profile /tmp/install-tl-unx/
 COPY packages.txt /tmp/packages.txt
 
-RUN wget -qO - ftp://tug.org/historic/systems/texlive/2023/install-tl-unx.tar.gz | \
+RUN wget -qO - ftp://tug.org/historic/systems/texlive/2024/install-tl-unx.tar.gz | \
     tar -xz -C /tmp/install-tl-unx --strip-components=1
 RUN /tmp/install-tl-unx/install-tl \
       --profile=/tmp/install-tl-unx/texlive.profile \
